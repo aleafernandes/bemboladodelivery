@@ -15,7 +15,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="pt-br">
       <body
-        className={`${poppins.className} w-screen min-h-screen overflow-x-hidden bg-[#FFE17B]`}
+        className={`${poppins.className} min-h-screen w-screen overflow-x-hidden bg-[#FFE17B]`}
       >
         <CartProvider>
           <Nav />

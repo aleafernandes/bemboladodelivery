@@ -22,21 +22,21 @@ export default function Menu() {
   const currentPage = usePathname()
   const [filterType, setFilterType] = useState<string>('sanduiche')
   return (
-    <section id="cardapio" className="bg-[#FFF9C9] py-8 w-full">
-      <h1 className="text-center font-extrabold text-xl tracking-[0.18em] uppercase text-red-800">
+    <section id="cardapio" className="w-full bg-[#FFF9C9] py-8">
+      <h1 className="text-center text-xl font-extrabold uppercase tracking-[0.18em] text-red-800">
         Cardápio
       </h1>
-      <p className="py-2 italic text-xs text-center">
-        <span className="not-italic font-bold">Adicionais: </span>
+      <p className="py-2 text-center text-xs italic">
+        <span className="font-bold not-italic">Adicionais: </span>
         Queijo,Presunto,Carne,Ovo,Bacon,Cream Cheese,Molho Especial,Queijo
         Cheddar.
       </p>
       <div>
-        <ul className="flex gap-y-2 justify-center py-5">
+        <ul className="flex justify-center gap-y-2 py-5">
           {abaMenu.map((menu, i) => {
             return (
               <li
-                className="text-amber-600 cursor-pointer font-semibold  p-1.5"
+                className="cursor-pointer p-1.5 font-semibold  text-amber-600"
                 onClick={() => setFilterType(menu.tipo)}
                 key={i}
               >
@@ -52,10 +52,10 @@ export default function Menu() {
           .map((menu, index) => {
             return (
               <div
-                className="w-80 h-80 p-1 flex flex-col items-center justify-center gap-2"
+                className="flex h-80 w-80 flex-col items-center justify-center gap-2 p-1"
                 key={index}
               >
-                <div className="flex flex-col items-center justify-center gap-2 w-72 h-72">
+                <div className="flex h-72 w-72 flex-col items-center justify-center gap-2">
                   <Image
                     onError={errorImage}
                     src={menu.imagem}
@@ -63,15 +63,15 @@ export default function Menu() {
                     height={150}
                     alt="produto"
                   />
-                  <h3 className="text-red-800 font-medium text-lg">
+                  <h3 className="text-lg font-medium text-red-800">
                     {menu.produto}
                   </h3>
-                  <p className="text-center italic text-sm">{menu.descricao}</p>
+                  <p className="text-center text-sm italic">{menu.descricao}</p>
                 </div>
                 {currentPage === '/pedidos' && (
                   <button
                     onClick={() => addItem(menu)}
-                    className="p-3  bg-[#388d5e] rounded-xl  text-white font-medium w-50 text-xs"
+                    className="w-50  rounded-xl bg-[#388d5e]  p-3 text-xs font-medium text-white"
                   >
                     Adicionar ao Carrinho
                   </button>
@@ -82,7 +82,7 @@ export default function Menu() {
       </div>
       {currentPage !== '/pedidos' && (
         <div className="flex justify-center gap-y-6 py-5">
-          <button className="p-3  bg-[#820000] rounded-2xl text-white font-medium">
+          <button className="rounded-2xl  bg-[#820000] p-3 font-medium text-white">
             <Link href="/pedidos">FAÇA SEU PEDIDO</Link>
           </button>
         </div>
