@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { ShoppingCartSimple } from '@phosphor-icons/react'
 import CartItems from './pedidos/CartItems'
 import { useCart } from '@/context/CartContext'
+import { useState } from 'react'
 
 const abas = [
   { path: '/', title: 'Início' },
@@ -14,6 +15,7 @@ const abas = [
 
 export default function Nav() {
   const { removeItem, cart } = useCart()
+  const [isOpen, setIsOpen] = useState<boolean>(false)
   return (
     <div className="flex items-center justify-around container">
       <Image
@@ -33,8 +35,17 @@ export default function Nav() {
           })}
         </ul>
         <div className="relative">
-          <CartItems item={cart} removeItem={removeItem} />
-          <ShoppingCartSimple size={32} weight="fill" />
+          {isOpen && <CartItems item={cart} removeItem={removeItem} />}
+          <button className="relative" onClick={() => setIsOpen(!isOpen)}>
+            <div className="absolute w-4 h-4 rounded-full bg-red-700 text-white text-xs z-10 top-0 right-0">
+              {cart.length > 0 ? cart.length : 0}
+            </div>
+            <ShoppingCartSimple
+              className="relative fill-[#388d5e]"
+              size={32}
+              weight="fill"
+            />
+          </button>
         </div>
       </nav>
     </div>

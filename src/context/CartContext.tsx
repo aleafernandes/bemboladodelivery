@@ -56,6 +56,8 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     return cart.reduce((acc, item) => acc + item.preco * item.quantidade, 0)
   }
 
+  // const sendCart = (item: CartItem) => {}
+
   const value = {
     cart,
     addItem,
