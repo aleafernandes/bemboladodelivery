@@ -6,18 +6,18 @@ export default function CartItems({
   removeItem: (id: number) => void
 }) {
   return (
-    <div className="absolute top-14  w-72  max-h-96 overflow-hidden overflow-y-auto divide-y divide-zinc-200 rounded-lg p-5 bg-white">
-      {item.map((item: object, index: number) => {
+    <div className="absolute top-14  max-h-96  w-72 divide-y divide-zinc-200 overflow-hidden overflow-y-auto rounded-lg bg-white p-5">
+      {item.map((item: any, index: number) => {
         return (
           <div className="flex flex-col gap-2 py-2" key={index}>
-            <h1 className="text-red-800 font-bold text-base">{item.produto}</h1>
-            <p className="text-red-800 font-medium text-sm">
+            <h1 className="text-base font-bold text-red-800">{item.produto}</h1>
+            <p className="text-sm font-medium text-red-800">
               R$ {item.preco.toFixed(2)}
             </p>
-            <p className="text-red-800 font-medium text-sm">
+            <p className="text-sm font-medium text-red-800">
               Quantidade: {item.quantidade}
             </p>
-            <h2 className="text-red-800 font-medium text-sm">
+            <h2 className="text-sm font-medium text-red-800">
               Total: R${(item.preco * item.quantidade).toFixed(2)}
             </h2>
             {item.selecionar && (
@@ -32,7 +32,7 @@ export default function CartItems({
               </select>
             )}
             <button
-              className="bg-red-800 rounded-md p-2 w-20  text-xs text-white"
+              className="w-20 rounded-md bg-red-800 p-2  text-xs text-white"
               onClick={() => removeItem(index)}
             >
               Remover
