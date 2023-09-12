@@ -1,4 +1,16 @@
-export const listaMenu = [
+interface MenuItem {
+  imagem: string
+  produto: string
+  descricao: string
+  preco: number
+  tipo: string
+  selecionar?: Array<object>
+  adicionaLeite?: boolean
+  quantidade: number
+  id: number
+}
+
+export const listaMenu: MenuItem[] = [
   {
     imagem: '/assets/misto-quente.png',
     produto: 'Misto Quente',
@@ -23,6 +35,7 @@ export const listaMenu = [
     descricao: 'Pão Bola, Carne, e Queijo. ',
     preco: 1.0,
     tipo: 'sanduiche',
+    quantidade: 1,
     id: 3,
   },
   {

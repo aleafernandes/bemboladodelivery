@@ -4,10 +4,7 @@ import { listaMenu } from './lista'
 import { useState } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
-
-interface MenuProps {
-  addItem?: () => void | undefined
-}
+import { useCart } from '@/context/CartContext'
 
 function errorImage(e: any) {
   e.target.src = '/assets/orange-error.png'
@@ -20,7 +17,8 @@ const abaMenu = [
   { title: 'Combos', tipo: 'combo' },
 ]
 
-export default function Menu({ addItem }: MenuProps) {
+export default function Menu() {
+  const { addItem } = useCart()
   const currentPage = usePathname()
   const [filterType, setFilterType] = useState<string>('sanduiche')
   return (

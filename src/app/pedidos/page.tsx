@@ -1,22 +1,8 @@
 'use client'
 
 import Menu from '@/components/Menu'
-import { listaMenu } from '@/components/lista'
-import CartItems from '@/components/pedidos/CartItems'
-import { useEffect, useState } from 'react'
 
 export default function Pedidos() {
-  const [cart, setCart] = useState([])
-  const removeItem = (id: number) => {
-    const newCart = cart.filter((item) => item.id !== id)
-    setCart(newCart)
-  }
-  const addItem = (item: any) => {
-    setCart((oldCart) => [...oldCart, item])
-  }
-  useEffect(() => {
-    console.log(cart)
-  }, [cart])
   return (
     <>
       <div>
@@ -29,10 +15,7 @@ export default function Pedidos() {
           loja.
         </p>
       </div>
-      {cart.map((menu) => (
-        <CartItems key={menu.id} item={menu} removeItem={removeItem} />
-      ))}
-      <Menu addItem={addItem} />
+      <Menu />
     </>
   )
 }

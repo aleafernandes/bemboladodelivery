@@ -4,6 +4,7 @@ import { poppins } from '@/styles/fonts'
 import { ReactNode } from 'react'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
+import { CartProvider } from '@/context/CartContext'
 
 export const metadata: Metadata = {
   title: 'Bem Bolado Burguer - Delivery',
@@ -16,9 +17,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body
         className={`${poppins.className} w-screen min-h-screen overflow-x-hidden bg-[#FFE17B]`}
       >
-        <Nav />
-        {children}
-        <Footer />
+        <CartProvider>
+          <Nav />
+          {children}
+          <Footer />
+        </CartProvider>
       </body>
     </html>
   )
