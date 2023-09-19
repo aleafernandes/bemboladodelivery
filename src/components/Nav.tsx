@@ -2,10 +2,8 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { ShoppingCartSimple } from '@phosphor-icons/react'
-import CartItems from './pedidos/CartItems'
-import { useCart } from '@/context/CartContext'
-import { useState } from 'react'
+
+import Modal from './Modal'
 
 const abas = [
   { path: '/', title: 'Início' },
@@ -14,8 +12,6 @@ const abas = [
 ]
 
 export default function Nav() {
-  const { removeItem, cart } = useCart()
-  const [isOpen, setIsOpen] = useState<boolean>(false)
   return (
     <div className="container flex items-center justify-around">
       <Image
@@ -34,19 +30,7 @@ export default function Nav() {
             )
           })}
         </ul>
-        <div className="relative">
-          {isOpen && <CartItems item={cart} removeItem={removeItem} />}
-          <button className="relative" onClick={() => setIsOpen(!isOpen)}>
-            <div className="absolute right-0 top-0 z-10 h-4 w-4 rounded-full bg-red-700 text-xs text-white">
-              {cart.length > 0 ? cart.length : 0}
-            </div>
-            <ShoppingCartSimple
-              className="relative fill-[#388d5e]"
-              size={32}
-              weight="fill"
-            />
-          </button>
-        </div>
+        <Modal />
       </nav>
     </div>
   )

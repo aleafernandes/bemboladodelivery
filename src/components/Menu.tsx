@@ -82,7 +82,7 @@ export default function Menu() {
       </div>
       {currentPage !== '/pedidos' && (
         <div className="flex justify-center gap-y-6 py-5">
-          <button className="rounded-2xl  bg-[#820000] p-3 font-medium text-white">
+          <button className="rounded-2xl  bg-none p-3 font-medium text-[#820000] text-white">
             <Link href="/pedidos">FAÇA SEU PEDIDO</Link>
           </button>
         </div>

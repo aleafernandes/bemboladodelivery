@@ -1,3 +1,21 @@
+interface Adicionais {
+  name: string
+  quantidade: number
+  id: number
+}
+
+const listaAdicionais: Adicionais[] = [
+  { name: 'Queijo', quantidade: 0, id: 1 },
+  { name: 'Presunto', quantidade: 0, id: 2 },
+  { name: 'Carne', quantidade: 0, id: 3 },
+  { name: 'Ovo', quantidade: 0, id: 4 },
+  { name: 'Bacon', quantidade: 0, id: 5 },
+  { name: 'Cream Cheese', quantidade: 0, id: 6 },
+  { name: 'Molho Especial', quantidade: 0, id: 7 },
+  { name: 'Queijo Cheddar', quantidade: 0, id: 8 },
+  { name: 'Leite', quantidade: 0, id: 9 },
+]
+
 interface MenuItem {
   imagem: string
   produto: string
