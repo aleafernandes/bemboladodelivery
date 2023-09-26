@@ -1,3 +1,8 @@
+'use client'
+
+import { useMenu } from '@/context/MenuContext'
+
 export default function Checkout() {
-  return <div></div>
+  const { formatOrderText } = useMenu()
+  return <div>{formatOrderText()}</div>
 }

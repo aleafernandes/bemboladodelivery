@@ -1,23 +1,31 @@
 import { useRef } from 'react'
 import { ShoppingCartSimple, X } from '@phosphor-icons/react'
-import { useCart } from '@/context/CartContext'
+import { useMenu } from '@/context/MenuContext'
+import Link from 'next/link'
 
 export default function Modal() {
   const dialogRef = useRef<HTMLDialogElement>(null)
   const openModal = () => {
-    if (dialogRef.current) {
-      dialogRef.current.showModal()
-      document.body.style.overflowY = 'hidden'
-    }
+    dialogRef.current?.showModal()
+    document.body.style.overflowY = 'hidden'
   }
   const closeModal = () => {
-    if (dialogRef.current) {
-      dialogRef.current.close()
-      document.body.style.overflowY = 'auto'
-    }
+    dialogRef.current?.close()
+    document.body.style.overflowY = 'auto'
   }
 
-  const { cart, removeItem } = useCart()
+  const {
+    menu,
+    removeItem,
+    increaseAdditionalItemQuantity,
+    increaseIngredientQuantity,
+    decreaseAdditionalItemQuantity,
+    decreaseIngredientQuantity,
+    calculateItemTotal,
+    calculateTotal,
+    setSelectedFlavor,
+    setSelectedSize,
+  } = useMenu()
 
   return (
     <>
@@ -30,7 +38,7 @@ export default function Modal() {
           />
         </button>
         <div className="absolute right-0 top-0 z-10 grid h-4 w-4 place-items-center rounded-full bg-red-700 text-xs text-white">
-          {cart.length > 0 ? cart.length : 0}
+          {menu.length > 0 ? menu.length : 0}
         </div>
       </div>
       {/* DIALOG */}
@@ -46,50 +54,177 @@ export default function Modal() {
             </button>
           </div>
 
-          <div className="max-h-full divide-y divide-zinc-200 overflow-y-auto overflow-x-hidden ">
-            {cart.map((item: any, index: number) => {
+          <div className="max-h-full flex-1 divide-y  divide-zinc-200 overflow-y-auto overflow-x-hidden ">
+            {menu.map((item, itemIndex) => {
               return (
                 <div
-                  className="flex items-center justify-start gap-2 py-2"
-                  key={index}
+                  key={itemIndex}
+                  className="container space-y-4 py-4 font-mono"
                 >
-                  <h1 className="text-base font-bold text-red-800">
-                    {item.produto}
-                  </h1>
-                  <p className="text-sm font-medium text-red-800">
-                    R$ {item.preco.toFixed(2)}
-                  </p>
-                  {/* <p className="text-sm font-medium text-red-800">
-              Quantidade: {item.quantidade}
-            </p> */}
-                  {/* <h2 className="text-sm font-medium text-red-800">
-                    Total: R${(item.preco * item.quantidade).toFixed(2)}
-                  </h2> */}
-                  {item.selecionar && (
-                    <select
-                      className="h-5 text-center text-xs"
-                      name="bebidas"
-                      id="bebidas"
-                    >
-                      {item.selecionar.map(
-                        ({ name, id }: { name: string; id: number }) => (
-                          <option key={id} value={name}>
-                            {name}
-                          </option>
-                        ),
-                      )}
-                    </select>
+                  <div className="flex items-center justify-between">
+                    <p>
+                      {item.name} - R${calculateItemTotal(item).toFixed(2)}
+                    </p>
+                    <button onClick={() => removeItem(itemIndex)}>
+                      Remover
+                    </button>
+                  </div>
+                  <div className="space-x-4">
+                    {item.flavor && (
+                      <select
+                        onChange={(e) =>
+                          setSelectedFlavor(itemIndex, e.target.value)
+                        }
+                        className="rounded bg-none p-2"
+                      >
+                        <option selected hidden>
+                          Selecione Sabor
+                        </option>
+                        {item.flavor?.map((flavor) => {
+                          return (
+                            <option key={flavor?.name} value={flavor?.name}>
+                              {flavor?.name}
+                            </option>
+                          )
+                        })}
+                      </select>
+                    )}
+                    {item.size && (
+                      <select
+                        onChange={(e) =>
+                          setSelectedSize(itemIndex, e.target.value)
+                        }
+                        className="rounded bg-none p-2"
+                      >
+                        <option selected hidden>
+                          Selecione o Tamanho
+                        </option>
+                        {item.size?.map((size) => {
+                          return (
+                            <option key={size} value={size}>
+                              {size}
+                            </option>
+                          )
+                        })}
+                      </select>
+                    )}
+                  </div>
+                  {item.ingredients && (
+                    <div className="relative">
+                      <input
+                        type="checkbox"
+                        id={`${itemIndex}-ing`}
+                        className="peer sr-only"
+                      />
+                      <label
+                        htmlFor={`${itemIndex}-ing`}
+                        className="text-blue-600"
+                      >
+                        Ingredientes
+                      </label>
+                      <div className="hidden space-y-2 peer-checked:block">
+                        {item.ingredients?.map((ing, ingredientIndex) => {
+                          return (
+                            <div
+                              key={ingredientIndex}
+                              className="flex items-center justify-between"
+                            >
+                              {ing.name}
+                              <div className="flex items-center divide-x overflow-hidden rounded border py-1">
+                                <button
+                                  onClick={() =>
+                                    decreaseIngredientQuantity(
+                                      itemIndex,
+                                      ingredientIndex,
+                                    )
+                                  }
+                                  className="px-2 text-blue-600 disabled:text-gray-400"
+                                >
+                                  -
+                                </button>
+                                <span className="px-2 text-center">
+                                  {ing.quantity}
+                                </span>
+                                <button
+                                  onClick={() =>
+                                    increaseIngredientQuantity(
+                                      itemIndex,
+                                      ingredientIndex,
+                                    )
+                                  }
+                                  className="px-2 text-blue-600 disabled:text-gray-400"
+                                >
+                                  +
+                                </button>
+                              </div>
+                            </div>
+                          )
+                        })}
+                      </div>
+                    </div>
                   )}
-                  <button
-                    className="ml-auto w-20 rounded-md bg-none p-2 text-xs  text-red-800 "
-                    onClick={() => removeItem(index)}
-                  >
-                    Remover
-                  </button>
+                  {item.additionalItems && (
+                    <div className="relative">
+                      <input
+                        type="checkbox"
+                        id={`${itemIndex}-add`}
+                        className="peer sr-only"
+                      />
+                      <label
+                        htmlFor={`${itemIndex}-add`}
+                        className="text-blue-600"
+                      >
+                        Adicionais
+                      </label>
+                      <div className="hidden space-y-2 peer-checked:block">
+                        {item.additionalItems?.map((add, additionalIndex) => {
+                          return (
+                            <div
+                              key={additionalIndex}
+                              className="flex items-center justify-between"
+                            >
+                              {add.name}
+                              <div className="flex items-center divide-x overflow-hidden rounded border py-1">
+                                <button
+                                  onClick={() =>
+                                    decreaseAdditionalItemQuantity(
+                                      itemIndex,
+                                      additionalIndex,
+                                    )
+                                  }
+                                  className="px-2 text-blue-600 disabled:text-gray-400"
+                                >
+                                  -
+                                </button>
+                                <span className="px-2 text-center">
+                                  {add.quantity}
+                                </span>
+                                <button
+                                  onClick={() =>
+                                    increaseAdditionalItemQuantity(
+                                      itemIndex,
+                                      additionalIndex,
+                                    )
+                                  }
+                                  className="px-2 text-blue-600 disabled:text-gray-400"
+                                >
+                                  +
+                                </button>
+                              </div>
+                            </div>
+                          )
+                        })}
+                      </div>
+                    </div>
+                  )}
                 </div>
               )
             })}
           </div>
+          <footer className="flex justify-between">
+            <Link href="/checkout">Finalizar Pedido</Link>
+            Total R$ {calculateTotal().toFixed(2)}
+          </footer>
         </div>
       </dialog>
     </>
