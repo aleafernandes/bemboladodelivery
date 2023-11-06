@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export default function Head() {
   return (
-    <header className="container flex items-center justify-around pt-20">
+    <header className="container flex flex-col items-center justify-around pt-20 md:flex-row">
       <div className="self-start">
         <h1 className="text-4xl font-extrabold text-amber-800">
           Que tal um lanche Bem Bolado?

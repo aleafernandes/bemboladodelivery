@@ -54,7 +54,7 @@ export default function Modal() {
             </button>
           </div>
 
-          <div className="max-h-full flex-1 divide-y  divide-zinc-200 overflow-y-auto overflow-x-hidden ">
+          <div className="max-h-full flex-1 divide-y divide-zinc-200 overflow-y-auto overflow-x-hidden ">
             {menu.map((item, itemIndex) => {
               return (
                 <div

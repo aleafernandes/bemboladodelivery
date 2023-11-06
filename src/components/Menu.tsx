@@ -34,7 +34,22 @@ export default function Menu() {
         Cheddar.
       </p>
       <div>
-        <ul className="flex justify-center gap-y-2 py-5">
+        <select
+          onChange={(e) => setFilterType(e.target.value)}
+          className="rounded bg-none p-2 md:hidden"
+        >
+          <option selected hidden>
+            Selecione Sabor
+          </option>
+          {abaMenu.map((menu, i) => {
+            return (
+              <option className="capitalize" key={i} value={menu.type}>
+                {menu.type}
+              </option>
+            )
+          })}
+        </select>
+        <ul className="hidden justify-center gap-y-2 py-5 md:flex">
           {abaMenu.map((menu, i) => {
             return (
               <li
@@ -48,7 +63,7 @@ export default function Menu() {
           })}
         </ul>
       </div>
-      <div className="grid grid-cols-3 place-items-center gap-y-2">
+      <div className="flex flex-wrap place-items-center md:grid md:grid-cols-3 md:gap-y-2">
         {orderMenu
           .filter((menu) => !filterType || menu.type === filterType)
           .map((menu, index) => {

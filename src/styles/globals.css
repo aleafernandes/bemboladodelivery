@@ -3,18 +3,17 @@
 @tailwind utilities;
 
 ::-webkit-scrollbar {
-    /* Customize the scrollbar width */
-    width: 6px;
+  /* Customize the scrollbar width */
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-    /* Customize the scrollbar track */
-    background-color: hsla(0, 100%, 100%, 0.38);
+  /* Customize the scrollbar track */
+  background-color: hsla(0, 100%, 100%, 0.38);
 }
 
 ::-webkit-scrollbar-thumb {
-    /* Customize the scrollbar thumb */
-
+  /* Customize the scrollbar thumb */
 }
 
 /* Chrome, Safari, Edge, Opera */

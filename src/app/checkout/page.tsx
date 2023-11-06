@@ -3,6 +3,5 @@
 import { useMenu } from '@/context/MenuContext'
 
 export default function Checkout() {
-  const { formatOrderText } = useMenu()
-  return <div>{formatOrderText()}</div>
+  return <div className="container grid h-screen place-items-center"></div>
 }
