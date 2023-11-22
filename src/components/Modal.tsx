@@ -1,7 +1,7 @@
-import { useRef } from 'react'
-import { ShoppingCartSimple, X } from '@phosphor-icons/react'
 import { useMenu } from '@/context/MenuContext'
+import { Basket, X } from '@phosphor-icons/react'
 import Link from 'next/link'
+import { useRef } from 'react'
 
 export default function Modal() {
   const dialogRef = useRef<HTMLDialogElement>(null)
@@ -31,13 +31,9 @@ export default function Modal() {
     <>
       <div className="relative">
         <button onClick={openModal}>
-          <ShoppingCartSimple
-            className="relative fill-[#388d5e]"
-            size={32}
-            weight="fill"
-          />
+          <Basket size={24} weight="fill" />
         </button>
-        <div className="absolute right-0 top-0 z-10 grid h-4 w-4 place-items-center rounded-full bg-red-700 text-xs text-white">
+        <div className="absolute -right-2 top-0 z-10 grid h-4 w-4 place-items-center rounded-full bg-red-700 text-xs text-white">
           {menu.length > 0 ? menu.length : 0}
         </div>
       </div>

@@ -1,14 +1,16 @@
-import type { Config } from 'tailwindcss'
-
-const config: Config = {
+/** @type {import('tailwindcss').Config} */
+module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     container: {
       center: true,
       padding: '1rem',
     },
-    extend: {},
+    extend: {
+      aspectRatio: {
+        reels: '9 / 16',
+      },
+    },
   },
   plugins: [],
 }
-export default config

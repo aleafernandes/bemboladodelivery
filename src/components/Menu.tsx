@@ -1,10 +1,9 @@
 'use client'
-import Image from 'next/image'
-import { orderMenu } from '@/types/Menu'
-import { useState } from 'react'
-import { usePathname } from 'next/navigation'
-import Link from 'next/link'
 import { useMenu } from '@/context/MenuContext'
+import { orderMenu } from '@/types/Menu'
+import { CaretUpDown, PlusCircle } from '@phosphor-icons/react'
+import Image from 'next/image'
+import { useState } from 'react'
 
 function errorImage(e: any) {
   e.target.src = '/assets/orange-error.png'
@@ -19,101 +18,72 @@ const abaMenu = [
 
 export default function Menu() {
   const { addItem } = useMenu()
-  const currentPage = usePathname()
   const [filterType, setFilterType] = useState<string>('sanduiche')
+
   return (
-    <section id="cardapio" className="w-full bg-[#FFF9C9] py-8">
-      {currentPage !== '/pedidos' && (
-        <h1 className="text-center text-xl font-extrabold uppercase tracking-[0.18em] text-red-800">
-          Cardápio
-        </h1>
-      )}
-      <p className="py-2 text-center text-xs italic">
-        <span className="font-bold not-italic">Adicionais: </span>
-        Queijo,Presunto,Carne,Ovo,Bacon,Cream Cheese,Molho Especial,Queijo
-        Cheddar.
-      </p>
-      <div>
-        <select
-          onChange={(e) => setFilterType(e.target.value)}
-          className="rounded bg-none p-2 md:hidden"
-        >
-          <option selected hidden>
-            Selecione Sabor
-          </option>
-          {abaMenu.map((menu, i) => {
-            return (
-              <option className="capitalize" key={i} value={menu.type}>
-                {menu.type}
-              </option>
-            )
-          })}
-        </select>
-        <ul className="hidden justify-center gap-y-2 py-5 md:flex">
-          {abaMenu.map((menu, i) => {
-            return (
-              <li
-                className="cursor-pointer p-1.5 font-semibold  text-amber-600"
-                onClick={() => setFilterType(menu.type)}
-                key={i}
-              >
-                {menu.title}
-              </li>
-            )
-          })}
-        </ul>
+    <div
+      id="cardapio"
+      className="flex w-full flex-col items-center justify-center gap-11 bg-gradient-to-br from-[#18181B] to-[#27272A] py-10"
+    >
+      <div className="flex flex-col items-center justify-center gap-6">
+        <span className="text-center text-[2rem] uppercase">Cardápio</span>
+        <span className="text-center leading-normal">
+          Adicionais: Queijo, Presunto, Carne, Ovo, Bacon, Cream Cheese, Molho
+          Especial, Queijo Cheddar.
+        </span>
       </div>
-      <div className="flex flex-wrap place-items-center md:grid md:grid-cols-3 md:gap-y-2">
+      <div className="flex h-24 items-center justify-end self-stretch px-28 py-2">
+        <div className="flex items-center gap-2 rounded-lg bg-white px-4 py-2">
+          <span className="text-lg uppercase text-black">Categoria</span>
+          <CaretUpDown size={24} fill="black" weight="fill" />
+        </div>
+      </div>
+      <div className="flex w-full flex-wrap content-start items-start gap-x-[8.625rem] gap-y-[4.3125rem] md:px-28">
         {orderMenu
           .filter((menu) => !filterType || menu.type === filterType)
           .map((menu, index) => {
             return (
               <div
-                className="flex h-80 w-80 flex-col items-center justify-center gap-2 p-1"
                 key={index}
+                className="flex h-96 w-80 shrink-0 flex-col items-center gap-3 rounded-lg bg-white p-4 text-black"
               >
-                <div className="flex h-72 w-72 flex-col items-center justify-center gap-2">
-                  <Image
-                    onError={errorImage}
-                    src={menu.image}
-                    width={150}
-                    height={150}
-                    alt="produto"
+                <div className="flex items-start justify-end self-stretch">
+                  <PlusCircle
+                    onClick={() => addItem(menu)}
+                    className="cursor-pointer transition-colors duration-300 hover:fill-[#32b346]"
+                    size={32}
+                    fill="#3DD655"
+                    weight="fill"
                   />
-                  <h3 className="text-lg font-medium text-red-800">
-                    {menu.name}
-                  </h3>
-                  <div className="flex flex-wrap justify-center gap-1">
+                </div>
+                <Image
+                  onError={errorImage}
+                  src={menu.image}
+                  width={200}
+                  height={200}
+                  alt="produto"
+                />
+                <div className="flex flex-col items-center justify-center gap-3 self-stretch p-3">
+                  <span className="uppercase">{menu.name}</span>
+                  <div className="flex flex-wrap items-center justify-center gap-0.5">
                     {menu.ingredients?.map((ingredient, index) => {
                       return (
-                        <p className="text-center text-sm italic" key={index}>
+                        <span
+                          className="text-center text-xs uppercase opacity-50"
+                          key={index}
+                        >
                           {index < (menu.ingredients?.length ?? 0) - 1
                             ? ` ${ingredient.name},`
                             : ingredient.name}
-                        </p>
+                        </span>
                       )
                     })}
                   </div>
                 </div>
-                {currentPage === '/pedidos' && (
-                  <button
-                    onClick={() => addItem(menu)}
-                    className="w-50  rounded-xl bg-[#388d5e]  p-3 text-xs font-medium text-white"
-                  >
-                    Adicionar ao Carrinho
-                  </button>
-                )}
               </div>
             )
           })}
       </div>
-      {currentPage !== '/pedidos' && (
-        <div className="flex justify-center gap-y-6 py-5">
-          <button className="rounded-2xl  bg-[#820000] p-3 font-medium text-white">
-            <Link href="/pedidos">FAÇA SEU PEDIDO</Link>
-          </button>
-        </div>
-      )}
-    </section>
+    </div>
   )
 }
