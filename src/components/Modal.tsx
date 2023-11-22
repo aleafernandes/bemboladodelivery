@@ -218,7 +218,12 @@ export default function Modal() {
             })}
           </div>
           <footer className="flex justify-between">
-            <Link href="/checkout">Finalizar Pedido</Link>
+            <Link
+              className="rounded-md bg-green-600 p-2 text-white hover:bg-green-800"
+              href="/checkout"
+            >
+              Finalizar Pedido
+            </Link>
             Total R$ {calculateTotal().toFixed(2)}
           </footer>
         </div>
